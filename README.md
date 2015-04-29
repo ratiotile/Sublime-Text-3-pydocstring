@@ -1,7 +1,8 @@
-Sublime-Text-2-pydocstring
+Sublime-Text-3-pydocstring
 ==========================
+--Ported to Sublime Text 3 from https://github.com/JerryKwan/Sublime-Text-2-pydocstring--
 
-a Sublime Text 2 plugin to automatic generate docstring for module/class/function
+a Sublime Text 3 plugin to automatic generate docstring for module/class/function
 
 docstring.py
 ============
@@ -11,8 +12,7 @@ for the module, class or function automatically.
 
 Installation
 ------------
-Copy **[docstring.py](https://github.com/JerryKwan/Sublime-Text-2-pydocstring/blob/master/docstring.py)** into
-your ST2 User packages folder *(Sublime Text 2 > Preferences > Browse Packages... > User)*
+Clone this repo into your sublime 3 packages folder.
 
 Usage
 -----
