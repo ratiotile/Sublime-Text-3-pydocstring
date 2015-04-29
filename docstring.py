@@ -14,6 +14,26 @@ import datetime
 import getpass
 import os.path
 
+class OriginalStyle:
+    args = "@param {}:\n"
+    param = "@param {}:\n"
+    result = "@result: \n"
+    summary = "@summary: \n"
+    author = ""
+
+class GoogleStyle(OriginalStyle):
+    args = "Args:\n"
+    param = "\t{}: description\n"
+    result = "Returns:\n"
+    summary = "one_line_summary\n"
+    author = "author: {}\n"
+
+class SphinxStyle(OriginalStyle):
+    summary = ":summary: \n"
+    author = ":author: %s\n"
+
+
+
 def construct_module_docstring():
     '''
     @summary: construct the module docstring
@@ -28,7 +48,7 @@ def construct_module_docstring():
     return docstring
 
 
-def construct_docstring(declaration, indent=0):
+def construct_docstring(declaration, indent=0, style=GoogleStyle):
     '''
     @summary: construct docstring according to the declaration
     @param declaration: the result of parse_declaration() reurns
@@ -38,18 +58,20 @@ def construct_docstring(declaration, indent=0):
     try:
         typename, name, params = declaration
         lines = []
-        lines.append("'''\n")
-        lines.append("@summary: \n")
+        lines.append('""" ' + style.summary)
+        lines.append('\n')
         # lines.append("\n")
         if typename == "class":
             pass
         elif typename == "def":
+            lines.append(style.args)
             if len(params):
                 for param in params:
-                    lines.append("@param %s:\n" % (param))
+                    lines.append(style.param.format(param))
                 # lines.append("\n")
-            lines.append("@result: \n")
-        lines.append("'''\n")
+            lines.append('\n')
+            lines.append(style.result)
+        lines.append('"""\n')
 
         for line in lines:
             docstring += " " * indent + line
@@ -138,7 +160,7 @@ def parse_declaration(declaration):
     def rindex(l, x):
         index = -1
         if len(l) > 0:
-            for i in xrange(len(l) - 1, -1, -1):
+            for i in range(len(l) - 1, -1, -1):
                 if l[i] == x:
                     index = i
         return index
